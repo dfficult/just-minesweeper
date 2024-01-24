@@ -1,0 +1,122 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #2d2d2d;
+}
+
+button{
+    color: #ababab;
+    background-color: #1d1d1d;
+    border-radius: 5px;
+    border: 0px;
+    padding: 5px 10px;
+    margin: 5px;
+    font-size: larger;
+    transition-duration: 0.25s;
+}
+
+input{
+    color: #ababab;
+    background-color: #1d1d1d;
+    border-radius: 5px;
+    border: 0px;
+    padding: 5px 10px;
+}
+
+input{
+    width: 45px;
+}
+
+button:hover{
+    color: #ffffff;
+    background-color: #aaaaaa75;
+}
+
+h2{
+    color: #ababab;
+}
+
+span, p, .lsub{
+    color: #ababab;
+    font-size: medium;
+}
+
+label{
+    color: #ababab;
+    font-size: large;
+}
+
+.menu{
+    display: flex;
+    margin: 5px;
+    border-radius: 5px;
+    place-content: center;
+}
+
+.area{
+    display: flex;
+    place-content: center;
+}
+
+.board{
+    background-color: #767676;
+    color: #000000;
+    padding: 5px;
+    border: 1px solid #ababab;
+    border-radius: 5px;
+}
+
+
+.block{
+    display: inline;
+    margin: 1px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    font-family: Arial;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition-duration: 0.2s;
+    user-select: none;
+}
+
+.row{
+    margin-top: 1px;
+    margin-bottom: 1px;
+    display: flex;
+}
+
+.hide{
+    background-color: #ababab;
+}
+
+.hide:hover{
+    background-color: #dddddd;
+}
+
+.number{
+    background-color: #767676;
+}
+
+.mine{
+    background-color: #900000;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.popup {
+    border: 1px solid #bbbbbb;
+    background-color: #2d2d2d;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition-duration: 0.25s;
+    border-radius: 5px;
+    padding: 20px;
+    z-index: 2;
+}

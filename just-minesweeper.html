@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="just-minesweeper.css">
+    <title>踩地雷</title>
+</head>
+<body>
+    <div class="menu" id="menu">
+        <button onclick="new_ui(1)" title="開啟新局">新遊戲</button>
+        <button id="minescount" title="剩餘地雷數量">💣10</button>
+        <button id="timer" onclick="pause()" title="遊戲經過時間，點選以暫停">🕑00:00</button>
+    </div>
+    
+
+
+
+    <div class="popup" id="popup" style="display: none;">
+        <h2>請選擇難易度</h2>
+        <br>
+
+        <input type="radio" name="difficulty"  id="easy" value="1" checked>
+        <label for="easy">簡單</label><br>
+        <label for="easy" class="lsub" style="margin-left: 20px;">9×9，10個地雷(12%)</label><br><br>
+
+        <input type="radio" name="difficulty" id="medium" value="2">
+        <label for="medium">中等</label><br>
+        <label for="medium" class="lsub" style="margin-left: 20px;">16×16，40個地雷(16%)</label><br><br>
+
+        <input type="radio" name="difficulty" id="hard" value="3">
+        <label for="hard">困難</label><br>
+        <label for="hard" class="lsub" style="margin-left: 20px;">16×30，99個地雷(21%)</label><br><br>
+
+        <input type="radio" name="difficulty" id="Customize" value="4">
+        <label for="Customize">自訂</label><br>
+        <label for="Customize" style="margin-left: 20px;"> </label>
+        <input type="number" name="difficulty" id="w" value="15" onchange="custom_size()">
+        <span>×</span>
+        <input type="number" name="difficulty" id="h" value="15" onchange="custom_size()">
+        <span>，</span>
+        <input type="number" name="difficulty" id="m" value="36" onchange="custom_size()">
+        <span id="percentage">個地雷(16%)</span><br><br>
+
+        <button style="float: right; margin-left: 5px;" onclick="new_ui(2)">開始</button>
+        <button style="float: right; margin-left: 5px;" onclick="new_ui(0)">取消</button>
+        <span style="float: right; display: none; color: #ff0000;" id="err"></span>
+
+
+    </div>
+
+
+    <div class="area">
+        <div class="board" id="board"></div>
+    </div>
+
+
+    <script src="just-minesweeper.js"></script>
+</body>
+</html>
