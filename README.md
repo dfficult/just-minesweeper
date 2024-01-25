@@ -1,7 +1,7 @@
 # 這就只是踩地雷
 just minesweeper  
 
-目前版本 - v1.0 [下載](https://github.com/dfficult/just-minesweeper/releases/tag/1.0)
+最新版本 -> [下載](https://github.com/dfficult/just-minesweeper/releases/latest)
 
 
 ### 簡介
