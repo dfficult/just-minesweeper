@@ -42,10 +42,15 @@
         <input type="number" name="difficulty" id="m" value="36" onchange="custom_size()">
         <span id="percentage">個地雷(16%)</span><br><br>
 
+        <input type="checkbox" id="allowflag" checked>
+        <label for="allowflag">允許插旗</label><br>
+        <input type="checkbox" id="allowq" checked>
+        <label for="allowq">允許問號(需勾選插旗)</label><br>
+        <br>
+
         <button style="float: right; margin-left: 5px;" onclick="new_ui(2)">開始</button>
         <button style="float: right; margin-left: 5px;" onclick="new_ui(0)">取消</button>
         <span style="float: right; display: none; color: #ff0000;" id="err"></span>
-
 
     </div>
 

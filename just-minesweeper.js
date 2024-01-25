@@ -1,5 +1,5 @@
-// just minesweeper 1.0
-// 2024.1.24
+// just minesweeper 1.0.1
+// 2024.1.25
 
 
 
@@ -16,7 +16,7 @@ function getRandom(min, max) {  // get a random int between min(include) and max
 
 
 function new_ui(e){  // The new game popup
-    err.style.display = "none";
+    pause()
     switch(e){
         case 0:
             document.getElementById("popup").style.display = "none";
@@ -144,6 +144,10 @@ function mkbrd(rols, cols, mines){  // Creates the board
     document.getElementById("minescount").innerText = `💣${minesleft}`;
     document.getElementById("minescount").style.background = "#1d1d1d";
     document.getElementById("minescount").style.color = "#ababab";
+    minutes = 0;
+    seconds = 0;
+    document.getElementById("timer").innerText = "🕑00:00";
+    clearInterval(timer);
 }
 
 function flip(x, y){  // Filp and win/lose detection
@@ -302,6 +306,11 @@ function doubleclick(x, y){  // Double click auto flip
         if (x < 0 || x > board.length-1 || y < 0  || y > board[0].length-1){
             return 0;
         }else {
+            if (document.getElementById(`${x},${y}`).innerText == '?'){
+                return 0;
+            } else{
+                return (board[x][y] == 3 || board[x][y] == 4) ? 1 : 0;
+            }
             return (board[x][y] == 3 || board[x][y] == 4) ? 1 : 0;
         }
     }
@@ -325,6 +334,12 @@ function doubleclick(x, y){  // Double click auto flip
 
 function flag(x, y){  // Flags
     
+    // No flag
+    if (!document.getElementById("allowflag").checked){
+        return;
+    }
+
+
     if (ended || paused){
         return;
     }
@@ -340,12 +355,15 @@ function flag(x, y){  // Flags
         target.innerText = '🚩';
         minesleft--;
         board[x][y] = (board[x][y] == 1) ? 3 : 4;
-    } else if (target.innerText == '🚩'){
+    } else if (target.innerText == '🚩' && document.getElementById("allowq").checked){
         target.innerText = '?';
         minesleft++;
     } else{
         target.innerText = '';
         board[x][y] = (board[x][y] == 3) ? 1 : 0;
+        if (!document.getElementById("allowq").checked){
+            minesleft++;
+        }
     }
     document.getElementById("minescount").innerText = `💣${minesleft}`
 
