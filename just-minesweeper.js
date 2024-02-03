@@ -1,5 +1,5 @@
-// just minesweeper 1.0.1
-// 2024.1.25
+// just minesweeper 1.1
+// 2024.2.3
 
 
 
@@ -10,76 +10,107 @@
 // 4 = Flagged Wrong
 
 
+
+function flgchk(){
+    if (!document.getElementById("allowflag").checked){
+        document.getElementById("allowq").checked = false;
+        document.getElementById("allowq").disabled = true;
+    } else{
+        document.getElementById("allowq").disabled = false;
+    }
+}
+
+
 function getRandom(min, max) {  // get a random int between min(include) and max(exclude)
     return Math.floor(Math.random() * (max - min) ) + min;
 }
 
 
-function new_ui(e){  // The new game popup
-    pause()
-    switch(e){
-        case 0:
-            document.getElementById("popup").style.display = "none";
-            break;
-        case 1:
-            document.getElementById("popup").style.display = "block";
-            break;
-        case 2:
-            if (document.getElementById("Customize").checked == true){
-                custom_size();
-                if (!allow_start){
-                    return;
-                }
-            }
-            document.getElementById("popup").style.display = "none";
-            let opt = document.querySelector("input[name='difficulty']:checked").value;
-            switch (opt){
-                case "1":
-                    mkbrd(9,9,10);
-                    break;
-                case "2":
-                    mkbrd(16,16,40);
-                    break;
-                case "3":
-                    mkbrd(16,30,99);
-                    break;
-                default:
-                    let w = document.getElementById("w").value;
-                    let h = document.getElementById("h").value;
-                    let m = document.getElementById("m").value;
-                    mkbrd(w,h,m);
-            }
-    }
-}
-
 let allow_start = false;
-function custom_size(){  // Get mines percentage
-    document.getElementById("Customize").checked = true;
+function custom_size_chk(){  // Get mines percentage
     let w = document.getElementById("w").value;
     let h = document.getElementById("h").value;
     let m = document.getElementById("m").value;
     let p = Math.round(m/(w*h)*100);
     if (p / 1 == p){
-        document.getElementById("percentage").innerText = `個地雷(${p}%)`;
+        document.getElementById("percentage").innerText = `(${p}%)`;
     }
-    
-    
-    let err = document.getElementById("err");
-    
-    if (m < 1){
-        err.innerText = "地雷數量需大於1 ";
-    } else if (w < 3 || h < 3){
-        err.innerText = "長和寬都需大於3 ";
-    } else if (w*h-9 < m){
-        err.innerText = `地雷數量需小於${w*h-9} `;
+    document.getElementById("mt").innerText = `地雷 (1~${w*h-9}): `;
+
+    let err = 0;
+
+    if (m < 1 || w*h-9 < m){
+        document.getElementById("mt").style.color = "#ff0000";
+        err++;
     } else{
-        err.style.display = "none";
-        allow_start = true;
-        return;
+        document.getElementById("mt").style.color = "#bbbbbb";
     }
-    err.style.display = "block";
-    allow_start = false;
+    if (w < 3 || w > 100){
+        document.getElementById("wt").style.color = "#ff0000";
+        err++;
+    } else{
+        document.getElementById("wt").style.color = "#bbbbbb";
+    }
+    if (h < 3 || h > 100){
+        document.getElementById("ht").style.color = "#ff0000";
+        err++;
+    }else{
+        document.getElementById("ht").style.color = "#bbbbbb";
+    }
+
+    if (err == 0){
+        allow_start = true;
+    } else{
+        allow_start = false;
+    }
 }
+
+function show_menu(e){
+    pause();
+    switch (e){
+        case 1:
+            document.getElementById("popup").style.display = "block";
+            break;
+        case 2:
+            document.getElementById("popup2").style.display = "block";
+
+    }
+    document.getElementById("overlay").style.display = "flex";
+}
+
+function close_menu(){
+    pause();
+    paused = false;
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("popup2").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+}
+
+function new_b(option){
+    switch (option){
+        case 1:
+            mkbrd(9,9,10);
+            break;
+        case 2:
+            mkbrd(16,16,40);
+            break;
+        case 3:
+            mkbrd(16,30,99);
+            break;
+        case 4:
+        custom_size_chk();    
+        if (allow_start){
+                let w = document.getElementById("w").value;
+                let h = document.getElementById("h").value;
+                let m = document.getElementById("m").value;
+                mkbrd(h, w, m);
+            } else{
+                return;
+            }
+    }
+    close_menu();
+}
+
 
 
 let board = new Array(), started = false, ended = false, minescount, minesleft;
@@ -428,21 +459,29 @@ function pause(){  // Pause the timer
     if (paused == false){
         paused = true;
         clearInterval(timer);
-        document.getElementById("timer").innerText = `⏸️${minutes<10?'0'+minutes:minutes}:${seconds<10?'0'+seconds:seconds} [已暫停]`;
+        document.getElementById("timer").innerText = `⏸️${minutes<10?'0'+minutes:minutes}:${seconds<10?'0'+seconds:seconds}`;
+        document.getElementById("overlay").style.display = "flex";
     } else{
         paused = false;
         start_timer();
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("popup").style.display = "none";
     }
     
 }
 
 
 document.addEventListener('keydown', function(event){  // key binds
-    // F2 -> new game
-    if (event.key == 'F2') {
-        new_ui(1);
+    // F2 -> new game menu
+    if (event.key == "F2") {
+        if (document.getElementById("popup").style.display == "none"){
+            show_menu(1);
+        } else{
+            close_menu();
+        }
     }
-
+    
+    // R -> new game with the same layout
     if (event.key == "r") {
         mkbrd(board.length, board[0].length, minescount);
         minutes = 0;
@@ -451,6 +490,7 @@ document.addEventListener('keydown', function(event){  // key binds
         clearInterval(timer);
     }
 
+    // p -> pause
     if (event.key == "p") {
         pause();
     }

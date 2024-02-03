@@ -8,49 +8,58 @@
 </head>
 <body>
     <div class="menu" id="menu">
-        <button onclick="new_ui(1)" title="開啟新局">新遊戲</button>
+        <button onclick="show_menu(2)" title="開啟新局">選項</button>
+        <button onclick="show_menu(1)" title="開啟新局">新遊戲</button>
         <button id="minescount" title="剩餘地雷數量">💣10</button>
         <button id="timer" onclick="pause()" title="遊戲經過時間，點選以暫停">🕑00:00</button>
     </div>
-    
 
 
+    <div class="overlay" id="overlay" style="display: none;" onclick="close_menu()">
+        <h2 style="font-weight: bolder; color: #ffffff; font-size: 5vh; text-shadow: 1px 1px 8px #000000;">遊戲暫停</h2>
+        <p style="font-size: 3vh;">按 [p] 或點擊空白處以繼續</p>
+    </div>
 
-    <div class="popup" id="popup" style="display: none;">
-        <h2>請選擇難易度</h2>
-        <br>
 
-        <input type="radio" name="difficulty"  id="easy" value="1" checked>
-        <label for="easy">簡單</label><br>
-        <label for="easy" class="lsub" style="margin-left: 20px;">9×9，10個地雷(12%)</label><br><br>
+    <div class="popup1" id="popup" style="display: none;">
 
-        <input type="radio" name="difficulty" id="medium" value="2">
-        <label for="medium">中等</label><br>
-        <label for="medium" class="lsub" style="margin-left: 20px;">16×16，40個地雷(16%)</label><br><br>
+        <div class="option option1" onclick="new_b(1)">
+            <h2>簡單</h2>
+            <p>9×9，10個地雷(12%)</p>
+        </div>
 
-        <input type="radio" name="difficulty" id="hard" value="3">
-        <label for="hard">困難</label><br>
-        <label for="hard" class="lsub" style="margin-left: 20px;">16×30，99個地雷(21%)</label><br><br>
+        <div class="option option2" onclick="new_b(2)">
+            <h2>中等</h2>
+            <p>16×16，40個地雷(16%)</p>
+        </div>
 
-        <input type="radio" name="difficulty" id="Customize" value="4">
-        <label for="Customize">自訂</label><br>
-        <label for="Customize" style="margin-left: 20px;"> </label>
-        <input type="number" name="difficulty" id="w" value="15" onchange="custom_size()">
-        <span>×</span>
-        <input type="number" name="difficulty" id="h" value="15" onchange="custom_size()">
-        <span>，</span>
-        <input type="number" name="difficulty" id="m" value="36" onchange="custom_size()">
-        <span id="percentage">個地雷(16%)</span><br><br>
+        <div class="option option3" onclick="new_b(3)">
+            <h2>困難</h2>
+            <p>30×16，99個地雷(21%)</p>
+        </div>
 
-        <input type="checkbox" id="allowflag" checked>
+        <div class="option option4" onclick="new_b(4)">
+            <h2>自訂</h2>
+            <p>使用下列的長寬與地雷數量</p>
+        </div>
+
+
+        <span id="wt">長 (3~100): </span><input type="number" name="difficulty" id="w" value="15" onchange="custom_size_chk()"><br>
+        <span id="ht">寬 (3~100): </span><input type="number" name="difficulty" id="h" value="15" onchange="custom_size_chk()"><br>
+        <span id="mt">地雷 (1~216): </span><input type="number" name="difficulty" id="m" value="36" onchange="custom_size_chk()">
+        <span id="percentage">(16%)</span><br><br>
+
+        <span style="float: right;">點選空白處以取消</span>
+    </div>
+
+
+    <div class="popup1" id="popup2" style="display: none;">
+        <input type="checkbox" id="allowflag" checked onchange="flgchk()">
         <label for="allowflag">允許插旗</label><br>
         <input type="checkbox" id="allowq" checked>
         <label for="allowq">允許問號(需勾選插旗)</label><br>
         <br>
-
-        <button style="float: right; margin-left: 5px;" onclick="new_ui(2)">開始</button>
-        <button style="float: right; margin-left: 5px;" onclick="new_ui(0)">取消</button>
-        <span style="float: right; display: none; color: #ff0000;" id="err"></span>
+        <p>just-minesweeper v1.1</p>
 
     </div>
 
